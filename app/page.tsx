@@ -96,7 +96,7 @@ export default function DeepNodeManifesto() {
           </h2>
           
           <p className="max-w-2xl text-base md:text-lg lg:text-xl text-slate-300 mb-12 leading-relaxed bg-white/5 p-4 md:p-6 rounded-lg backdrop-blur-md border border-white/10 shadow-2xl">
-            We build GDPR-compliant <strong className="text-white">"Process & Destroy"</strong> AI data pipelines. Your corporate data is never stored, and our models never hallucinate. Engineered with German precision.
+            We architect GDPR-compliant 'Process & Purge' AI data pipelines. Your corporate intelligence is processed ephemerally with zero data retention. Engineered with zero-tolerance precision.
           </p>
         </section>
 
@@ -168,6 +168,33 @@ export default function DeepNodeManifesto() {
           </div>
         </section>
 
+      </div>
+      {/* DEEPNODE AI İMZA ALANI (Senin Videon) */}
+      <div className="w-full max-w-5xl mx-auto px-8 mt-12 mb-8">
+        <div className="relative w-full aspect-[21/9] bg-[#050505] border border-cyan-900/40 rounded-lg overflow-hidden group shadow-[0_0_30px_rgba(6,182,212,0.05)]">
+          
+          <div className="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
+          
+          {/* İŞTE O EFSANE VİDEON */}
+          <video 
+            src="/deepnode.mp4" 
+            autoPlay={true} 
+            loop={true} 
+            muted={true} 
+            playsInline={true} 
+            className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen grayscale group-hover:grayscale-0 transition duration-700"
+          ></video>
+          
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
+            <div className="text-cyan-500/80 font-mono text-[10px] tracking-[0.4em] mb-3">
+              [ THE ARCHITECT ]
+            </div>
+            <div className="text-xl md:text-3xl font-black tracking-widest text-slate-200 drop-shadow-lg">
+              DEEPNODE <span className="text-cyan-600">AI</span>
+            </div>
+          </div>
+          
+        </div>
       </div>
     </main>
   );
