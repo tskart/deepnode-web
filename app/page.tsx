@@ -113,21 +113,36 @@ export default function DeepNodeManifesto() {
           </p>
         </section>
 
-        {/* YENİ: VİDEO DEMO ALANI */}
-        <section className="max-w-4xl mx-auto w-full px-6 pb-24">
-          <div className="flex flex-col items-center">
-            <h3 className="text-cyan-500 font-mono text-sm tracking-widest mb-4 animate-pulse">WATCH THE CORE IN ACTION</h3>
-            <div className="w-full aspect-video bg-slate-900/80 border border-cyan-500/30 rounded-xl relative flex items-center justify-center group overflow-hidden shadow-[0_0_40px_rgba(34,211,238,0.15)] hover:border-cyan-400 transition-colors duration-500 cursor-pointer">
-              {/* Oynat Butonu */}
-              <div className="w-20 h-20 bg-cyan-500/20 rounded-full flex items-center justify-center group-hover:bg-cyan-500/40 transition-all duration-300 backdrop-blur-md z-10 border border-cyan-400/50 group-hover:scale-110">
-                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-cyan-400 border-b-[12px] border-b-transparent ml-2"></div>
-              </div>
-              {/* Video Arka Plan Görseli (Gelecekte buraya gerçek <video> etiketi gelecek) */}
-              <img src="/2.jpeg" alt="Video Thumbnail" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500 grayscale" />
-              <div className="absolute bottom-4 left-4 text-xs font-mono text-cyan-400">DEMO_INTERFACE_V3.mp4</div>
-            </div>
-          </div>
-        </section>
+        {/* YENİ: GERÇEK VİTRİN - THE CORE */}
+<section className="max-w-4xl mx-auto w-full px-6 pb-24">
+  <div className="flex flex-col items-center">
+    <h3 className="text-cyan-500 font-mono text-sm tracking-widest mb-4 animate-pulse">WATCH THE CORE IN ACTION</h3>
+    
+    <div className="relative w-full aspect-video bg-slate-900/80 border border-cyan-500/30 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] group">
+      
+      {/* İŞTE GERÇEK VİDEO BURADA */}
+      <video
+        src="/deepnode.mp4"
+        autoPlay={true}
+        loop={true}
+        muted={true}
+        playsInline={true}
+        className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+      ></video>
+
+      {/* Cyberpunk Tarama Efekti */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(6,182,212,0.1)_50%,transparent_100%)] bg-[length:100%_4px] pointer-events-none"></div>
+
+      <div className="absolute bottom-4 left-4 text-xs font-mono text-cyan-400 bg-black/50 px-2 py-1 rounded">DEEPNODE_CORE_V3.mp4</div>
+    </div>
+    
+    {/* Nakit Odaklı C-Level Mesaj */}
+    <p className="text-slate-400 text-sm mt-6 text-center max-w-2xl font-mono">
+      PROCESSING GLOBAL DATASETS WITH ZERO-TOLERANCE PRECISION. <br/>
+      <span className="text-cyan-500">SYSTEM STATUS: FULLY AUTONOMOUS</span>
+    </p>
+  </div>
+</section>
 
         {/* DEEPNODE GAZETE KÜPÜRLERİ (SATIN ALMA HUNİSİ) */}
         <section className="max-w-6xl mx-auto w-full px-6 pb-32">
