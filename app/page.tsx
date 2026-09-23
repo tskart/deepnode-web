@@ -1,4 +1,17 @@
+"use client";
+import { useEffect, useRef } from 'react';
 export default function DeepNodeManifesto() {
+
+// TypeScript'e bunun bir video olduğunu soyluyoruz (Kirmizi cizgi cikmamasi icin VIP bilet)
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Sayfa yuklenir yuklenmez videoyu zorla oynat
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => console.log("Video tetiklendi"));
+    }
+  }, []);
+
   return (
     <main className="relative min-h-screen text-slate-300 font-sans selection:bg-cyan-500 selection:text-white overflow-hidden bg-black">
       
@@ -177,12 +190,13 @@ export default function DeepNodeManifesto() {
           
           {/* İŞTE O EFSANE VİDEON */}
           <video 
+            ref={videoRef}
             src="/deepnode.mp4" 
             autoPlay={true} 
             loop={true} 
             muted={true} 
             playsInline={true} 
-            className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen grayscale group-hover:grayscale-0 transition duration-700"
+            className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen grayscale"
           ></video>
           
           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
