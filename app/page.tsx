@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-// DİKKAT: SADECE KULLANDIĞIMIZ İKONLAR KALDI. VERCEL ARTIK KESİNLİKLE ONAYLAYACAK!
 import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
 
 interface InvoiceResult {
@@ -67,7 +66,9 @@ export default function DeepNodeManifesto() {
       const response = await fetch('/api/process-invoice', { method: 'POST', headers: { 'X-API-Key': 'dn_super_secret_key_2026' }, body: formData });
       if (!response.ok) throw new Error('Karantina Protokolü: İşlem reddedildi veya sunucu hatası.');
       const data: InvoiceResult = await response.json(); setResult(data);
-    } catch (err: any) { setError(err.message || "Bilinmeyen bir sistem hatası oluştu."); } 
+    } catch (err) { 
+      setError(err instanceof Error ? err.message : "Bilinmeyen bir sistem hatası oluştu."); 
+    } 
     finally { setIsProcessing(false); }
   };
 
@@ -88,6 +89,7 @@ export default function DeepNodeManifesto() {
           onClick={() => setActiveCard(hud)}
           className={`hidden md:block fixed z-10 w-40 h-24 lg:w-72 lg:h-44 rounded-xl border bg-slate-900/40 overflow-hidden backdrop-blur-md transition-all duration-1000 grayscale hover:grayscale-0 group hover:z-50 cursor-crosshair animate-[pulse_4s_ease-in-out_infinite] hover:scale-110 ${hud.posClass} ${hud.styleClass}`}
         >
+           {/* eslint-disable-next-line @next/next/no-img-element */}
            <img src={hud.image} alt={hud.title} className={`w-full h-full object-cover opacity-30 group-hover:opacity-100 transition-all duration-700 ${hud.isMaster ? 'mix-blend-luminosity' : ''}`} />
            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-2 text-[9px] lg:text-[11px] font-mono text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-bold tracking-widest">
              <span className={hud.textClass}>[ {hud.id} ] {hud.title.toUpperCase()}</span>
@@ -141,7 +143,7 @@ export default function DeepNodeManifesto() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm">Absolute Autonomy.</span>
           </h2>
           <p className="max-w-2xl text-base md:text-lg lg:text-xl text-slate-300 mb-6 leading-relaxed bg-white/5 p-4 md:p-6 rounded-lg backdrop-blur-md border border-white/10 shadow-2xl">
-            We architect GDPR-compliant 'Process & Purge' AI data pipelines. Your corporate intelligence is processed ephemerally with zero data retention.
+            We architect GDPR-compliant &apos;Process &amp; Purge&apos; AI data pipelines. Your corporate intelligence is processed ephemerally with zero data retention.
           </p>
         </section>
 
@@ -160,7 +162,7 @@ export default function DeepNodeManifesto() {
               {!isProcessing ? (
                 <>
                   <svg className="w-10 h-10 text-cyan-500/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                  <p className="text-sm font-mono text-slate-300">Drag & Drop Invoice (JPG/PNG)</p>
+                  <p className="text-sm font-mono text-slate-300">Drag &amp; Drop Invoice (JPG/PNG)</p>
                   <p className="text-xs font-mono text-slate-500 mt-2">or click to browse</p>
                 </>
               ) : (
@@ -194,6 +196,7 @@ export default function DeepNodeManifesto() {
           <div className="flex flex-col items-center">
             <h3 className="text-cyan-500 font-mono text-sm tracking-widest mb-4 animate-pulse">WATCH THE CORE IN ACTION</h3>
             <div className="relative w-full aspect-video bg-slate-900/80 border border-cyan-500/30 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] group">
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video ref={videoRef} src="/deepnode.mp4" autoPlay={true} loop={true} muted={true} playsInline={true} className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"></video>
               <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(6,182,212,0.1)_50%,transparent_100%)] bg-[length:100%_4px] pointer-events-none"></div>
               <div className="absolute bottom-4 left-4 text-xs font-mono text-cyan-400 bg-black/50 px-2 py-1 rounded">DEEPNODE_CORE_V3.mp4</div>
@@ -213,7 +216,7 @@ export default function DeepNodeManifesto() {
             <article className="p-8 border-b md:border-b-0 md:border-r border-white/10 hover:bg-slate-900/60 transition-colors group animate-[pulse_4s_ease-in-out_infinite]">
               <div className="text-cyan-500 font-mono text-sm tracking-widest mb-3">VOL 1. / B2B AI</div>
               <h3 className="text-3xl font-extrabold text-white mb-4 uppercase tracking-tighter">DeepNode<br/><span className="text-cyan-400">Tech.</span></h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8">Industrial-scale 'Fail-Closed' AI architectures.</p>
+              <p className="text-slate-400 text-sm leading-relaxed mb-8">Industrial-scale &apos;Fail-Closed&apos; AI architectures.</p>
               <button className="w-full py-4 bg-cyan-950/40 border border-cyan-500/50 text-cyan-400 font-mono text-xs uppercase hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_20px_rgba(34,211,238,0.6)] transition-all rounded font-bold">ENTERPRISE LICENSE<br/><span className="text-lg">$2,500 / MO</span></button>
             </article>
             <article className="p-8 border-b md:border-b-0 md:border-r border-white/10 hover:bg-slate-900/60 transition-colors group animate-[pulse_5s_ease-in-out_infinite]">
@@ -235,6 +238,7 @@ export default function DeepNodeManifesto() {
         <div className="w-full max-w-5xl mx-auto px-8 mb-16 relative z-20">
           <div className="relative w-full aspect-[21/9] bg-[#050505] border border-cyan-900/40 rounded-lg overflow-hidden group shadow-[0_0_30px_rgba(6,182,212,0.05)]">
             <div className="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video ref={bottomVideoRef} src="/deepnode.mp4" autoPlay={true} loop={true} muted={true} playsInline={true} className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen grayscale"></video>
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
               <div className="text-cyan-500/80 font-mono text-[10px] tracking-[0.4em] mb-3">[ THE ARCHITECT ]</div>
@@ -259,8 +263,8 @@ export default function DeepNodeManifesto() {
             <div className="relative z-10 flex flex-col h-full text-amber-950 p-6 md:p-10">
               <div className="flex justify-between items-end border-b-2 border-amber-900/40 pb-4 mb-6">
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: "'Times New Roman', Times, serif" }}>The Architect's Vault</h1>
-                  <p className="font-mono text-[10px] uppercase font-bold tracking-[0.2em] mt-2 text-amber-900/70">Dynamic Briefing & Integration Matrix</p>
+                  <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: "'Times New Roman', Times, serif" }}>The Architect&apos;s Vault</h1>
+                  <p className="font-mono text-[10px] uppercase font-bold tracking-[0.2em] mt-2 text-amber-900/70">Dynamic Briefing &amp; Integration Matrix</p>
                 </div>
                 <button onClick={() => setActiveCard(null)} className="font-mono text-xs font-bold border-2 border-amber-950 px-4 py-2 hover:bg-amber-950 hover:text-[#e3d5b8] transition-colors">
                   [X] CLOSE VAULT
@@ -271,10 +275,10 @@ export default function DeepNodeManifesto() {
                 <div className="w-1/3 border-r-2 border-amber-900/20 pr-6 flex flex-col gap-3 overflow-y-auto">
                    <h3 className="font-serif italic text-lg font-bold text-amber-900/60 mb-2 border-b border-amber-900/20 pb-2">Presentation Chapters</h3>
                    
-                   <button onClick={() => setPresentationTopic('EXPERIENCE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'EXPERIENCE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Terminal className="w-5 h-5"/> Key Experiences & Role</button>
+                   <button onClick={() => setPresentationTopic('EXPERIENCE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'EXPERIENCE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Terminal className="w-5 h-5"/> Key Experiences &amp; Role</button>
                    <button onClick={() => setPresentationTopic('PIPELINE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'PIPELINE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Network className="w-5 h-5"/> DeepNode Pipeline</button>
                    <button onClick={() => setPresentationTopic('VISION')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'VISION' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Target className="w-5 h-5"/> DACH Region Strategy</button>
-                   <button onClick={() => setPresentationTopic('LEGAL')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'LEGAL' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Scale className="w-5 h-5"/> Compliance & Security</button>
+                   <button onClick={() => setPresentationTopic('LEGAL')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'LEGAL' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Scale className="w-5 h-5"/> Compliance &amp; Security</button>
                 </div>
 
                 <div className="w-2/3 overflow-y-auto pr-4" style={{ fontFamily: "'Georgia', serif" }}>
@@ -284,7 +288,7 @@ export default function DeepNodeManifesto() {
                       <div className="text-lg leading-relaxed text-justify space-y-4">
                         <p><span className="text-5xl font-black float-left mr-2 mt-[-5px]">I</span> am operating as the Lead Architect and B2B Systems Architect under DeepNode AI, bringing over four years of intense R&D and design engineering experience. My foundational expertise spans across railway engineering, industrial hydraulics, and electromechanical systems.</p>
                         <p>Through my tenure, including pivotal work with Akhenaton Hydraulic LLC, I have bridged the gap between heavy industrial logic and modern software architecture. My role encompasses software development, data annotation, and AI model evaluation—ensuring theoretical AI models execute flawlessly in rigid, industrial environments.</p>
-                        <p className="font-bold border-l-4 border-amber-900 pl-4 my-6 italic">"My engineering philosophy: Build systems that anticipate failure and quarantine it before it affects the core."</p>
+                        <p className="font-bold border-l-4 border-amber-900 pl-4 my-6 italic">&quot;My engineering philosophy: Build systems that anticipate failure and quarantine it before it affects the core.&quot;</p>
                       </div>
                     </div>
                   )}
@@ -302,7 +306,7 @@ export default function DeepNodeManifesto() {
                       <h2 className="text-3xl font-black uppercase mb-4 leading-none">The Single-Line Matrix</h2>
                       <div className="text-lg leading-relaxed text-justify space-y-4">
                         <p>The single-line diagram above demonstrates the immutable flow of our architecture. From the moment a document (such as a Blacksea Agro invoice) hits our ingestion layer, it is processed entirely in memory.</p>
-                        <p>If a single API key or validation token is missing, the entire neural pipeline halts, quarantining the data immediately via our "Fail-Closed" doctrine. The orchestration layer analyzes the context, executes the extraction, and passes the structured payload to the final ERP system.</p>
+                        <p>If a single API key or validation token is missing, the entire neural pipeline halts, quarantining the data immediately via our &quot;Fail-Closed&quot; doctrine. The orchestration layer analyzes the context, executes the extraction, and passes the structured payload to the final ERP system.</p>
                       </div>
                     </div>
                   )}
@@ -319,10 +323,10 @@ export default function DeepNodeManifesto() {
 
                   {presentationTopic === 'LEGAL' && (
                     <div className="animate-in fade-in duration-500">
-                      <h2 className="text-3xl font-black uppercase mb-4 leading-none">GDPR & Zero-Retention</h2>
+                      <h2 className="text-3xl font-black uppercase mb-4 leading-none">GDPR &amp; Zero-Retention</h2>
                       <div className="text-lg leading-relaxed text-justify space-y-4">
                         <p>Under GDPR Article 17, companies struggle to delete data used for AI training. DeepNode bypasses this entirely: <em>we do not train on client data</em>.</p>
-                        <p>Our architecture employs a strict **Zero-Trust Purge** protocol. The moment the processed invoice reaches the client's SAP system, our neural RAM is wiped clean. Every transaction generates an encrypted, ephemeral hash proving that processing occurred without storing the payload. This is the gold standard for European corporate compliance.</p>
+                        <p>Our architecture employs a strict **Zero-Trust Purge** protocol. The moment the processed invoice reaches the client&apos;s SAP system, our neural RAM is wiped clean. Every transaction generates an encrypted, ephemeral hash proving that processing occurred without storing the payload. This is the gold standard for European corporate compliance.</p>
                       </div>
                     </div>
                   )}
@@ -347,6 +351,7 @@ export default function DeepNodeManifesto() {
             <div className="flex flex-col md:flex-row h-full overflow-hidden">
               <div className="md:w-3/5 p-6 border-r border-white/5 bg-black flex items-center justify-center relative">
                 <div className="w-full h-full rounded overflow-hidden relative border border-white/10">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={activeCard.image} alt="Node" className="w-full h-full object-cover opacity-30 mix-blend-screen" />
                 </div>
               </div>
