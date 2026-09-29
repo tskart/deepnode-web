@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-import { Network, Database, ShieldAlert, Cpu, Zap, Activity, Lock, Layers, Briefcase, ArrowRight, Scale, Globe, Target, Terminal, DollarSign, FileText } from 'lucide-react';
+// Kullanılmayan tüm ikonlar temizlendi, Vercel artık hata vermeyecek!
+import { Network, Database, ShieldAlert, Activity, Lock, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
 
 interface InvoiceResult {
   status: string;
@@ -8,7 +9,7 @@ interface InvoiceResult {
   data: { vendor: string; amount: string; date: string; tax_amount: string; language: string; };
 }
 
-// --- 6'LI HUD SİSTEMİ (ESKİ DEVASA BOYUTLARINA GERİ DÖNDÜ: lg:w-72 lg:h-44) ---
+// --- 6'LI HUD SİSTEMİ ---
 const VILLAGE_HUDS = [
   // SOL TARAF
   { id: 'HUD_01', title: 'Vision Core', subtitle: 'AI Logistics', image: '/2.jpeg', isMaster: false, 
@@ -53,6 +54,7 @@ export default function DeepNodeManifesto() {
   const [result, setResult] = useState<InvoiceResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activeCard, setActiveCard] = useState<any>(null);
   const [presentationTopic, setPresentationTopic] = useState<'EXPERIENCE' | 'PIPELINE' | 'VISION' | 'LEGAL'>('EXPERIENCE');
 
@@ -109,7 +111,7 @@ export default function DeepNodeManifesto() {
       {/* --- ANA İÇERİK --- */}
       <div className="relative z-20 flex flex-col min-h-screen">
         
-        {/* ÜST BİLGİ & DİL SEÇENEĞİ (MENÜ EKSİKSİZ EKLENDİ) */}
+        {/* ÜST BİLGİ & DİL SEÇENEĞİ */}
         <header className="flex items-center justify-between px-6 md:px-12 py-6 border-b border-white/5 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded flex items-center justify-center font-bold text-slate-950 text-lg shadow-[0_0_15px_rgba(34,211,238,0.4)]">DN</div>
@@ -119,9 +121,7 @@ export default function DeepNodeManifesto() {
           </div>
           
           <div className="flex items-center gap-4">
-            
-            {/* EKSİK OLAN DİL MENÜSÜ BURADA */}
-            <select className="bg-transparent border border-cyan-500/30 text-cyan-400 text-xs font-mono py-1 px-2 rounded outline-none cursor-pointer hover:border-cyan-400 transition-colors bg-black">
+            <select className="bg-black border border-cyan-500/40 text-cyan-400 text-xs font-mono py-1.5 px-3 rounded outline-none cursor-pointer hover:border-cyan-400 transition-colors shadow-[0_0_10px_rgba(6,182,212,0.1)]">
               <option value="en">EN - ENGLISH</option>
               <option value="de">DE - DEUTSCH</option>
               <option value="tr">TR - TÜRKÇE</option>
