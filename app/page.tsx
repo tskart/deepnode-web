@@ -3,7 +3,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
+import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal, Zap, Cpu } from 'lucide-react';
 
 interface InvoiceResult {
   status: string;
@@ -11,7 +11,7 @@ interface InvoiceResult {
   data: { vendor: string; amount: string; date: string; tax_amount: string; language: string; };
 }
 
-// --- ORİJİNAL 4'LÜ HUD SİSTEMİ ---
+// --- ORİJİNAL 4'LÜ HUD SİSTEMİ (Z-40 YAPILARAK TIKLANMA SORUNU ÇÖZÜLDÜ) ---
 const VILLAGE_HUDS = [
   { id: 'HUD_01', title: 'Vision Core', subtitle: 'AI Logistics', image: '/2.jpeg', isMaster: false, 
     posClass: 'top-28 left-4 lg:left-8', 
@@ -44,7 +44,8 @@ export default function DeepNodeManifesto() {
   const [error, setError] = useState<string | null>(null);
 
   const [activeCard, setActiveCard] = useState<any>(null);
-  const [presentationTopic, setPresentationTopic] = useState<'EXPERIENCE' | 'PIPELINE' | 'VISION' | 'LEGAL'>('EXPERIENCE');
+  // İlk açılışta AO Mülakat hazırlığı çıksın diye 'AO_PREP' yaptık
+  const [presentationTopic, setPresentationTopic] = useState<'AO_PREP' | 'EXPERIENCE' | 'PIPELINE' | 'LEGAL'>('AO_PREP');
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.play().catch(() => {});
@@ -75,6 +76,20 @@ export default function DeepNodeManifesto() {
   return (
     <main className="relative min-h-screen text-slate-300 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden bg-black">
       
+      {/* SÜREKLİ AŞAĞIDAN YUKARI AKAN GAZETE ANİMASYONU (CSS) */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes teleprompter {
+          0% { transform: translateY(100%); }
+          100% { transform: translateY(-150%); }
+        }
+        .animate-teleprompter {
+          animation: teleprompter 90s linear infinite;
+        }
+        .animate-teleprompter:hover {
+          animation-play-state: paused;
+        }
+      `}} />
+
       {/* ARKA PLAN */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-[#05050f] to-black"></div>
@@ -82,12 +97,12 @@ export default function DeepNodeManifesto() {
         <div className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-blue-900/10 blur-[150px] animate-[spin_80s_linear_infinite_reverse]"></div>
       </div>
 
-      {/* --- HUD EKRANLARI --- */}
+      {/* --- HUD EKRANLARI (Z-40 yapılarak tıklanma sorunu çözüldü) --- */}
       {VILLAGE_HUDS.map((hud) => (
         <div 
           key={hud.id} 
           onClick={() => setActiveCard(hud)}
-          className={`hidden md:block fixed z-10 w-40 h-24 lg:w-72 lg:h-44 rounded-xl border bg-slate-900/40 overflow-hidden backdrop-blur-md transition-all duration-1000 grayscale hover:grayscale-0 group hover:z-50 cursor-crosshair animate-[pulse_4s_ease-in-out_infinite] hover:scale-110 ${hud.posClass} ${hud.styleClass}`}
+          className={`hidden md:block fixed z-40 w-40 h-24 lg:w-72 lg:h-44 rounded-xl border bg-slate-900/40 overflow-hidden backdrop-blur-md transition-all duration-1000 grayscale hover:grayscale-0 group hover:z-50 cursor-pointer animate-[pulse_4s_ease-in-out_infinite] hover:scale-110 ${hud.posClass} ${hud.styleClass}`}
         >
            <img src={hud.image} alt={hud.title} className={`w-full h-full object-cover opacity-30 group-hover:opacity-100 transition-all duration-700 ${hud.isMaster ? 'mix-blend-luminosity' : ''}`} />
            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-2 text-[9px] lg:text-[11px] font-mono text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-bold tracking-widest">
@@ -126,10 +141,8 @@ export default function DeepNodeManifesto() {
           </div>
         </header>
 
-        {/* ANA VİTRİN - STARTUP VILLAGE TEPEYE ALINDI! pt-8 YAPILDI */}
+        {/* ANA VİTRİN */}
         <section className="flex flex-col items-center justify-center pt-8 pb-12 px-4 text-center z-20 relative">
-          
-          {/* TEPEYE ALINAN STARTUP VILLAGE */}
           <div className="mb-6">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-blue-500 animate-pulse drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]">
               Startup Village
@@ -174,26 +187,14 @@ export default function DeepNodeManifesto() {
                 </div>
               )}
             </div>
-            {error && <div className="mt-4 p-4 border border-red-500/50 bg-red-900/20 rounded text-red-400 font-mono text-sm">[ SYS_ERROR ] {error}</div>}
-            
-            {result && (
-              <div className="mt-6 border border-green-500/30 bg-black/60 rounded-lg overflow-hidden">
-                <div className="bg-green-900/20 px-4 py-2 border-b border-green-500/30 flex justify-between items-center">
-                  <span className="text-green-400 font-mono text-xs tracking-widest">DATA EXTRACTED SUCCESSFULLY</span>
-                  <span className="text-cyan-500 font-mono text-[10px]">TIME: {result.processing_time_seconds}s</span>
-                </div>
-                <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div><p className="text-xs text-slate-500 font-mono mb-1">VENDOR</p><p className="text-white font-mono text-sm bg-slate-800/50 p-2 rounded">{result.data.vendor}</p></div>
-                  <div><p className="text-xs text-slate-500 font-mono mb-1">AMOUNT</p><p className="text-white font-mono text-sm bg-slate-800/50 p-2 rounded">{result.data.amount}</p></div>
-                  <div><p className="text-xs text-slate-500 font-mono mb-1">DATE</p><p className="text-white font-mono text-sm bg-slate-800/50 p-2 rounded">{result.data.date}</p></div>
-                  <div><p className="text-xs text-slate-500 font-mono mb-1">TAX / VAT</p><p className="text-white font-mono text-sm bg-slate-800/50 p-2 rounded">{result.data.tax_amount}</p></div>
-                </div>
-              </div>
-            )}
           </div>
         </section>
 
-        {/* VİDEO */}
+        {/* =====================================================================================
+            VİDEO VE EKOSİSTEM (KAYBOLAN KISIMLAR GERİ GELDİ!)
+            ===================================================================================== */}
+        
+        {/* VİDEO BÖLÜMÜ */}
         <section className="relative z-20 max-w-4xl mx-auto w-full px-6 pb-24">
           <div className="flex flex-col items-center">
             <h3 className="text-cyan-500 font-mono text-sm tracking-widest mb-4 animate-pulse">WATCH THE CORE IN ACTION</h3>
@@ -205,6 +206,7 @@ export default function DeepNodeManifesto() {
           </div>
         </section>
 
+        {/* 3'LÜ EKOSİSTEM BÖLÜMÜ */}
         <section className="max-w-6xl mx-auto w-full px-6 pb-20 z-20">
           <div className="border-t-[2px] border-b border-white/10 py-4 mb-10 flex items-end justify-between">
             <div>
@@ -235,7 +237,7 @@ export default function DeepNodeManifesto() {
           </div>
         </section>
 
-        {/* 2. VİDEO (THE ARCHITECT İMZASI) */}
+        {/* ALT VİDEO (THE ARCHITECT İMZASI) */}
         <div className="w-full max-w-5xl mx-auto px-8 mb-16 relative z-20">
           <div className="relative w-full aspect-[21/9] bg-[#050505] border border-cyan-900/40 rounded-lg overflow-hidden group shadow-[0_0_30px_rgba(6,182,212,0.05)]">
             <div className="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
@@ -249,7 +251,7 @@ export default function DeepNodeManifesto() {
       </div>
 
       {/* =====================================================================================
-          MÜLAKAT ŞOVU: THE ARCHITECT VAULT
+          MÜLAKAT ŞOVU: AO GLOBE LIFE PREPARATION VAULT (3 SAYFALIK TELEPROMPTER)
           ===================================================================================== */}
       {activeCard && activeCard.isMaster && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4" onClick={() => setActiveCard(null)}>
@@ -261,10 +263,13 @@ export default function DeepNodeManifesto() {
             <div className="absolute inset-0 bg-[#e3d5b8]/90 backdrop-blur-sm"></div>
             
             <div className="relative z-10 flex flex-col h-full text-amber-950 p-6 md:p-10">
+              
               <div className="flex justify-between items-end border-b-2 border-amber-900/40 pb-4 mb-6">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter" style={{ fontFamily: "'Times New Roman', Times, serif" }}>The Architect's Vault</h1>
-                  <p className="font-mono text-[10px] uppercase font-bold tracking-[0.2em] mt-2 text-amber-900/70">Dynamic Briefing & Integration Matrix</p>
+                <div className="flex flex-col">
+                  <h1 className="text-5xl md:text-6xl font-black uppercase tracking-[0.1em] text-transparent bg-clip-text bg-gradient-to-b from-cyan-600 to-blue-800 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
+                    NODA ENGINE
+                  </h1>
+                  <p className="font-mono text-xs uppercase font-bold tracking-[0.3em] mt-1 text-amber-900/80">STRATEGIC ALIGNMENT MATRIX</p>
                 </div>
                 <button onClick={() => setActiveCard(null)} className="font-mono text-xs font-bold border-2 border-amber-950 px-4 py-2 hover:bg-amber-950 hover:text-[#e3d5b8] transition-colors">
                   [X] CLOSE VAULT
@@ -272,29 +277,69 @@ export default function DeepNodeManifesto() {
               </div>
 
               <div className="flex flex-1 overflow-hidden gap-8">
+                {/* SOL MENÜ */}
                 <div className="w-1/3 border-r-2 border-amber-900/20 pr-6 flex flex-col gap-3 overflow-y-auto">
-                   <h3 className="font-serif italic text-lg font-bold text-amber-900/60 mb-2 border-b border-amber-900/20 pb-2">Presentation Chapters</h3>
+                   <h3 className="font-serif italic text-lg font-bold text-amber-900/60 mb-2 border-b border-amber-900/20 pb-2">Intelligence Chapters</h3>
                    
-                   <button onClick={() => setPresentationTopic('EXPERIENCE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'EXPERIENCE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Terminal className="w-5 h-5"/> Key Experiences & Role</button>
-                   <button onClick={() => setPresentationTopic('PIPELINE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'PIPELINE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Network className="w-5 h-5"/> DeepNode Pipeline</button>
-                   <button onClick={() => setPresentationTopic('VISION')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'VISION' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Target className="w-5 h-5"/> DACH Region Strategy</button>
-                   <button onClick={() => setPresentationTopic('LEGAL')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'LEGAL' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Scale className="w-5 h-5"/> Compliance & Security</button>
+                   <button onClick={() => setPresentationTopic('AO_PREP')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'AO_PREP' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Zap className="w-5 h-5"/> AO Globe Life Prep</button>
+                   <button onClick={() => setPresentationTopic('EXPERIENCE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'EXPERIENCE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Terminal className="w-5 h-5"/> Core Architecture</button>
+                   <button onClick={() => setPresentationTopic('PIPELINE')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'PIPELINE' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Network className="w-5 h-5"/> Single-Line Matrix</button>
+                   <button onClick={() => setPresentationTopic('LEGAL')} className={`flex items-center gap-3 p-4 font-serif text-sm font-bold transition-all text-left rounded ${presentationTopic === 'LEGAL' ? 'bg-amber-900 text-[#e3d5b8] shadow-inner' : 'hover:bg-amber-900/10 text-amber-950'}`}><Scale className="w-5 h-5"/> Data Sovereignty</button>
                 </div>
 
-                <div className="w-2/3 overflow-y-auto pr-4" style={{ fontFamily: "'Georgia', serif" }}>
+                {/* SAĞ İÇERİK - TELEPROMPTER ALANI */}
+                <div className="w-2/3 h-full relative" style={{ fontFamily: "'Georgia', serif" }}>
+                  
+                  {/* YENİ: AŞAĞIDAN YUKARI AKAN MÜLAKAT METNİ (AO GLOBE LIFE) */}
+                  {presentationTopic === 'AO_PREP' && (
+                    <div className="relative w-full h-full overflow-hidden bg-amber-950/5 border border-amber-900/20 rounded shadow-inner p-6 cursor-pointer">
+                      
+                      {/* Üst ve Alt Gölgeler (Yazıların kaybolarak çıkması için) */}
+                      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#e3d5b8] to-transparent z-10 pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#e3d5b8] to-transparent z-10 pointer-events-none"></div>
+                      
+                      {/* AKAN İÇERİK (Fare ile üstüne gelince durur) */}
+                      <div className="animate-teleprompter flex flex-col gap-12 text-amber-950/90 pb-96 pt-40 px-4">
+                        
+                        {/* BÖLÜM 1 */}
+                        <div>
+                          <h2 className="text-3xl font-black uppercase text-center border-y-2 border-amber-900/30 py-4 mb-6">Phase 1: AO Globe Life Alignment</h2>
+                          <p className="text-lg leading-relaxed text-justify mb-4"><span className="text-6xl font-black float-left mr-3 mt-[-5px] text-amber-900">A</span>O Globe Life represents the pinnacle of institutional financial and insurance services. In such an ecosystem, adopting AI is not about simple automation; it is about absolute data sovereignty and infallible processing. The webinar phase confirms that your organization is scaling its digital infrastructure, seeking individuals who understand both macro-level strategy and micro-level execution.</p>
+                          <p className="text-lg leading-relaxed text-justify">Traditional SaaS models fail in the insurance sector because they retain sensitive underwriting and policy data. DeepNode’s architecture is specifically engineered to bypass these liabilities. By integrating 'Fail-Closed' neural nodes, we ensure that every client's financial profile is processed ephemerally. This is the strategic alignment I bring to the table.</p>
+                        </div>
+
+                        {/* BÖLÜM 2 */}
+                        <div>
+                          <h2 className="text-3xl font-black uppercase text-center border-y-2 border-amber-900/30 py-4 mb-6">Phase 2: The Architect's Value Proposition</h2>
+                          <p className="text-lg leading-relaxed text-justify mb-4">My background is not standard software development. With over four years in heavy industrial R&D, railway engineering, and electromechanical systems at Akhenaton Hydraulic LLC, my baseline is industrial logic. When a hydraulic system fails, the damage is catastrophic. When financial data leaks, the corporate damage is equally devastating.</p>
+                          <p className="text-lg leading-relaxed text-justify">I apply this industrial-grade "anticipate-and-quarantine" methodology directly to software architecture. I do not build web apps; I build secure intelligence pipelines. AO Globe Life needs a Lead Architect who treats data like a high-pressure system—managing loads, preventing leaks, and ensuring zero downtime during peak policy processing hours.</p>
+                        </div>
+
+                        {/* BÖLÜM 3 */}
+                        <div>
+                          <h2 className="text-3xl font-black uppercase text-center border-y-2 border-amber-900/30 py-4 mb-6">Phase 3: Execution & Integration</h2>
+                          <p className="text-lg leading-relaxed text-justify mb-4">The NODA engine is designed for frictionless integration. Instead of forcing AO Globe Life to abandon its legacy ERP or underwriting systems, my architecture serves as an invisible, intelligent bridge. The system reads raw inputs, validates them through a Single-Line Matrix, and pushes clean, structured data into your existing databases.</p>
+                          <p className="text-lg leading-relaxed text-justify font-bold border-l-4 border-amber-900 pl-4 my-6 italic">"True corporate synergy is achieved when the AI adapts to the enterprise's security needs, rather than forcing the enterprise to lower its shields."</p>
+                          <p className="text-lg leading-relaxed text-justify">As we transition to the final interview stage, my objective is clear: To demonstrate how this proprietary Zero-Retention model will reduce operational friction, ensure absolute GDPR/financial compliance, and position AO Globe Life as the most technologically impenetrable institution in the market.</p>
+                        </div>
+
+                        <div className="text-center mt-12 opacity-50 font-mono text-sm">[ END OF TELEMETRY DATA ]</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* DİĞER SEKMELER (GİZLİ SİLAHLAR) */}
                   {presentationTopic === 'EXPERIENCE' && (
-                    <div className="animate-in fade-in duration-500">
-                      <h2 className="text-3xl font-black uppercase mb-4 leading-none border-b border-amber-900/20 pb-2">Professional Trajectory</h2>
+                    <div className="animate-in fade-in duration-500 overflow-y-auto h-full pr-4">
+                      <h2 className="text-3xl font-black uppercase mb-4 leading-none border-b border-amber-900/20 pb-2">Core Architecture</h2>
                       <div className="text-lg leading-relaxed text-justify space-y-4">
                         <p><span className="text-5xl font-black float-left mr-2 mt-[-5px]">I</span> am operating as the Lead Architect and B2B Systems Architect under DeepNode AI, bringing over four years of intense R&D and design engineering experience. My foundational expertise spans across railway engineering, industrial hydraulics, and electromechanical systems.</p>
-                        <p>Through my tenure, including pivotal work with Akhenaton Hydraulic LLC, I have bridged the gap between heavy industrial logic and modern software architecture. My role encompasses software development, data annotation, and AI model evaluation—ensuring theoretical AI models execute flawlessly in rigid, industrial environments.</p>
-                        <p className="font-bold border-l-4 border-amber-900 pl-4 my-6 italic">"My engineering philosophy: Build systems that anticipate failure and quarantine it before it affects the core."</p>
                       </div>
                     </div>
                   )}
 
                   {presentationTopic === 'PIPELINE' && (
-                    <div className="animate-in fade-in duration-500">
+                    <div className="animate-in fade-in duration-500 overflow-y-auto h-full pr-4">
                       <div className="w-full bg-amber-950/5 text-amber-950 p-4 mb-6 rounded border border-amber-900/20 flex flex-col md:flex-row items-center justify-between font-mono text-[10px] font-bold tracking-widest">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="bg-amber-900 text-[#e3d5b8] px-2 py-1 rounded">1. INGESTION</span> <ArrowRight className="w-4 h-4"/>
@@ -305,28 +350,16 @@ export default function DeepNodeManifesto() {
                       </div>
                       <h2 className="text-3xl font-black uppercase mb-4 leading-none">The Single-Line Matrix</h2>
                       <div className="text-lg leading-relaxed text-justify space-y-4">
-                        <p>The single-line diagram above demonstrates the immutable flow of our architecture. From the moment a document (such as a Blacksea Agro invoice) hits our ingestion layer, it is processed entirely in memory.</p>
-                        <p>If a single API key or validation token is missing, the entire neural pipeline halts, quarantining the data immediately via our "Fail-Closed" doctrine. The orchestration layer analyzes the context, executes the extraction, and passes the structured payload to the final ERP system.</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {presentationTopic === 'VISION' && (
-                    <div className="animate-in fade-in duration-500">
-                      <h2 className="text-3xl font-black uppercase mb-4 leading-none">DACH Region Execution</h2>
-                      <div className="text-lg leading-relaxed text-justify space-y-4">
-                        <p>The German and broader DACH enterprise market requires systems that are not just innovative, but inherently robust and legally impeccable. DeepNode is architected exactly for this environment.</p>
-                        <p>We are not selling a simple SaaS wrapper; we are offering an industrial-grade **Computational Velocity** engine. For tier-one partners, we offer Dedicated Node deployments. This provides a private instance of our StartUp Village matrix, guaranteeing zero-latency processing even during peak logistical hours across Europe.</p>
+                        <p>The single-line diagram above demonstrates the immutable flow of our architecture. From the moment a document hits our ingestion layer, it is processed entirely in memory.</p>
                       </div>
                     </div>
                   )}
 
                   {presentationTopic === 'LEGAL' && (
-                    <div className="animate-in fade-in duration-500">
-                      <h2 className="text-3xl font-black uppercase mb-4 leading-none">GDPR & Zero-Retention</h2>
+                    <div className="animate-in fade-in duration-500 overflow-y-auto h-full pr-4">
+                      <h2 className="text-3xl font-black uppercase mb-4 leading-none border-b border-amber-900/20 pb-2">Data Sovereignty</h2>
                       <div className="text-lg leading-relaxed text-justify space-y-4">
-                        <p>Under GDPR Article 17, companies struggle to delete data used for AI training. DeepNode bypasses this entirely: <em>we do not train on client data</em>.</p>
-                        <p>Our architecture employs a strict **Zero-Trust Purge** protocol. The moment the processed invoice reaches the client's SAP system, our neural RAM is wiped clean. Every transaction generates an encrypted, ephemeral hash proving that processing occurred without storing the payload. This is the gold standard for European corporate compliance.</p>
+                        <p>Our architecture employs a strict **Zero-Trust Purge** protocol. Every transaction generates an encrypted, ephemeral hash proving that processing occurred without storing the payload. This is the gold standard for European corporate compliance.</p>
                       </div>
                     </div>
                   )}
