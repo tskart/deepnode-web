@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-// DİKKAT: Kullanılmayan hiçbir ikon (DollarSign, FileText vb.) burada yok. Vercel artık hata vermeyecek!
-import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal, Activity, Lock } from 'lucide-react';
+// DİKKAT: SADECE KULLANDIĞIMIZ İKONLAR KALDI. VERCEL ARTIK KESİNLİKLE ONAYLAYACAK!
+import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
 
 interface InvoiceResult {
   status: string;
@@ -9,27 +9,23 @@ interface InvoiceResult {
   data: { vendor: string; amount: string; date: string; tax_amount: string; language: string; };
 }
 
-// --- ORİJİNAL 4'LÜ HUD SİSTEMİ (Mülakat Modülü Sağ Altta) ---
+// --- ORİJİNAL 4'LÜ HUD SİSTEMİ ---
 const VILLAGE_HUDS = [
-  // SOL ÜST
   { id: 'HUD_01', title: 'Vision Core', subtitle: 'AI Logistics', image: '/2.jpeg', isMaster: false, 
     posClass: 'top-24 left-4 lg:left-8', 
     styleClass: 'border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]', textClass: 'text-cyan-400',
     details: 'The foundational neural net routing protocol. Optimizes B2B logistics.', stats: { nodes: 14200, latency: '0.4ms', status: 'Optimal' }, icon: Network },
   
-  // SOL ALT
   { id: 'HUD_02', title: 'Process & Purge', subtitle: 'Zero Retention', image: '/4.jpeg', isMaster: false, 
     posClass: 'bottom-8 lg:bottom-12 left-4 lg:left-8', 
     styleClass: 'border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]', textClass: 'text-cyan-400',
     details: 'Ephemeral data processing. Corporate intelligence is instantly purged.', stats: { nodes: 800, latency: '1.2ms', status: 'Enforced' }, icon: ShieldAlert },
   
-  // SAĞ ÜST
   { id: 'HUD_03', title: 'Quantum Grid', subtitle: 'Startup Matrix', image: '/3.jpeg', isMaster: false, 
     posClass: 'top-24 right-4 lg:right-8', 
     styleClass: 'border-emerald-500/20 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(52,211,153,0.6)]', textClass: 'text-emerald-400',
     details: 'Decentralized startup village matrix. Resources are dynamically allocated.', stats: { nodes: 450, latency: '0.1ms', status: 'Scaling' }, icon: Database },
   
-  // SAĞ ALT (THE ARCHITECT VAULT - MÜLAKAT GİZLİ SİLAHI)
   { id: 'MASTER', title: 'The Architect Vault', subtitle: 'Interactive Pitch Deck', image: '/vault.jpg', isMaster: true, 
     posClass: 'bottom-8 lg:bottom-12 right-4 lg:right-8', 
     styleClass: 'border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] shadow-[0_0_15px_rgba(245,158,11,0.2)]', textClass: 'text-amber-400 animate-pulse',
@@ -131,7 +127,6 @@ export default function DeepNodeManifesto() {
 
         {/* ANA VİTRİN */}
         <section className="flex flex-col items-center justify-center pt-24 pb-12 px-4 text-center">
-          
           <div className="mb-6">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-blue-500 animate-pulse drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]">
               Startup Village
