@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
+// DİKKAT: Kullanılmayan hiçbir ikon (DollarSign, FileText vb.) burada yok. Vercel artık hata vermeyecek!
+import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal, Activity, Lock } from 'lucide-react';
 
 interface InvoiceResult {
   status: string;
@@ -28,7 +29,7 @@ const VILLAGE_HUDS = [
     styleClass: 'border-emerald-500/20 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(52,211,153,0.6)]', textClass: 'text-emerald-400',
     details: 'Decentralized startup village matrix. Resources are dynamically allocated.', stats: { nodes: 450, latency: '0.1ms', status: 'Scaling' }, icon: Database },
   
-  // SAĞ ALT (THE ARCHITECT VAULT - MÜLAKAT GİZLİ SİLAHI - YOL .JPG OLARAK DÜZELTİLDİ!)
+  // SAĞ ALT (THE ARCHITECT VAULT - MÜLAKAT GİZLİ SİLAHI)
   { id: 'MASTER', title: 'The Architect Vault', subtitle: 'Interactive Pitch Deck', image: '/vault.jpg', isMaster: true, 
     posClass: 'bottom-8 lg:bottom-12 right-4 lg:right-8', 
     styleClass: 'border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] shadow-[0_0_15px_rgba(245,158,11,0.2)]', textClass: 'text-amber-400 animate-pulse',
