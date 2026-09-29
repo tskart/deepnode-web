@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef, DragEvent } from 'react';
-// Kullanılmayan tüm ikonlar temizlendi, Vercel artık hata vermeyecek!
-import { Network, Database, ShieldAlert, Activity, Lock, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
+import { Network, Database, ShieldAlert, Briefcase, ArrowRight, Scale, Target, Terminal } from 'lucide-react';
 
 interface InvoiceResult {
   status: string;
@@ -9,40 +8,31 @@ interface InvoiceResult {
   data: { vendor: string; amount: string; date: string; tax_amount: string; language: string; };
 }
 
-// --- 6'LI HUD SİSTEMİ ---
+// --- ORİJİNAL 4'LÜ HUD SİSTEMİ (Mülakat Modülü Sağ Altta) ---
 const VILLAGE_HUDS = [
-  // SOL TARAF
+  // SOL ÜST
   { id: 'HUD_01', title: 'Vision Core', subtitle: 'AI Logistics', image: '/2.jpeg', isMaster: false, 
     posClass: 'top-24 left-4 lg:left-8', 
     styleClass: 'border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]', textClass: 'text-cyan-400',
     details: 'The foundational neural net routing protocol. Optimizes B2B logistics.', stats: { nodes: 14200, latency: '0.4ms', status: 'Optimal' }, icon: Network },
   
-  { id: 'HUD_02', title: 'Quantum Grid', subtitle: 'Startup Matrix', image: '/3.jpeg', isMaster: false, 
-    posClass: 'top-1/2 -translate-y-1/2 left-4 lg:left-8', 
-    styleClass: 'border-emerald-500/20 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(52,211,153,0.6)]', textClass: 'text-emerald-400',
-    details: 'Decentralized startup village matrix. Resources are dynamically allocated.', stats: { nodes: 450, latency: '0.1ms', status: 'Scaling' }, icon: Database },
-  
-  { id: 'HUD_03', title: 'Process & Purge', subtitle: 'Zero Retention', image: '/4.jpeg', isMaster: false, 
+  // SOL ALT
+  { id: 'HUD_02', title: 'Process & Purge', subtitle: 'Zero Retention', image: '/4.jpeg', isMaster: false, 
     posClass: 'bottom-8 lg:bottom-12 left-4 lg:left-8', 
     styleClass: 'border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]', textClass: 'text-cyan-400',
     details: 'Ephemeral data processing. Corporate intelligence is instantly purged.', stats: { nodes: 800, latency: '1.2ms', status: 'Enforced' }, icon: ShieldAlert },
   
-  // SAĞ TARAF
-  { id: 'HUD_04', title: 'SAP Autonomy', subtitle: 'ERP Integration', image: '/5.jpeg', isMaster: false, 
+  // SAĞ ÜST
+  { id: 'HUD_03', title: 'Quantum Grid', subtitle: 'Startup Matrix', image: '/3.jpeg', isMaster: false, 
     posClass: 'top-24 right-4 lg:right-8', 
-    styleClass: 'border-blue-500/20 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]', textClass: 'text-blue-400',
-    details: 'Direct pipeline to corporate ERPs. Zero human intervention required.', stats: { nodes: 3100, latency: '0.8ms', status: 'Active' }, icon: Activity },
+    styleClass: 'border-emerald-500/20 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(52,211,153,0.6)]', textClass: 'text-emerald-400',
+    details: 'Decentralized startup village matrix. Resources are dynamically allocated.', stats: { nodes: 450, latency: '0.1ms', status: 'Scaling' }, icon: Database },
   
-  // THE ARCHITECT VAULT (MÜLAKAT GİZLİ SİLAHI)
-  { id: 'MASTER', title: 'The Architect Vault', subtitle: 'Interactive Pitch Deck', image: '/eski-el-yazmasi.jpg', isMaster: true, 
-    posClass: 'top-1/2 -translate-y-1/2 right-4 lg:right-8', 
+  // SAĞ ALT (THE ARCHITECT VAULT - MÜLAKAT GİZLİ SİLAHI - YOL .JPG OLARAK DÜZELTİLDİ!)
+  { id: 'MASTER', title: 'The Architect Vault', subtitle: 'Interactive Pitch Deck', image: '/vault.jpg', isMaster: true, 
+    posClass: 'bottom-8 lg:bottom-12 right-4 lg:right-8', 
     styleClass: 'border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] shadow-[0_0_15px_rgba(245,158,11,0.2)]', textClass: 'text-amber-400 animate-pulse',
     details: 'DYNAMIC INTERVIEW & PRESENTATION MODULE', stats: { nodes: 0, latency: '0.0ms', status: 'Classified' }, icon: Briefcase },
-  
-  { id: 'HUD_06', title: 'Security Shield', subtitle: 'Zero-Day Defense', image: '/6.jpeg', isMaster: false, 
-    posClass: 'bottom-8 lg:bottom-12 right-4 lg:right-8', 
-    styleClass: 'border-blue-500/20 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]', textClass: 'text-blue-400',
-    details: 'Zero-day threat mitigation. The shield learns from incoming anomalies.', stats: { nodes: 99, latency: '0.2ms', status: 'Hardened' }, icon: Lock },
 ];
 
 export default function DeepNodeManifesto() {
@@ -94,7 +84,7 @@ export default function DeepNodeManifesto() {
         <div className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-blue-900/10 blur-[150px] animate-[spin_80s_linear_infinite_reverse]"></div>
       </div>
 
-      {/* --- DEVASA HUD EKRANLARI --- */}
+      {/* --- DEVASA 4'LÜ HUD EKRANLARI --- */}
       {VILLAGE_HUDS.map((hud) => (
         <div 
           key={hud.id} 
@@ -139,12 +129,14 @@ export default function DeepNodeManifesto() {
         </header>
 
         {/* ANA VİTRİN */}
-        <section className="flex flex-col items-center justify-center pt-16 pb-12 px-4 text-center">
+        <section className="flex flex-col items-center justify-center pt-24 pb-12 px-4 text-center">
+          
           <div className="mb-6">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-blue-500 animate-pulse drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-blue-500 animate-pulse drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]">
               Startup Village
             </h1>
           </div>
+          
           <div className="inline-block px-5 py-2 mb-8 border border-cyan-500/40 rounded-full bg-cyan-500/10 text-cyan-400 text-xs md:text-sm font-mono tracking-widest shadow-[0_0_15px_rgba(34,211,238,0.2)]">
             [ PROPRIETARY NEURAL ENGINE ]
           </div>
@@ -152,7 +144,7 @@ export default function DeepNodeManifesto() {
             Zero Hallucination. <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm">Absolute Autonomy.</span>
           </h2>
-          <p className="max-w-2xl text-base md:text-lg lg:text-xl text-slate-300 mb-6 leading-relaxed bg-black/40 p-4 md:p-6 rounded-lg backdrop-blur-md border border-white/10 shadow-2xl">
+          <p className="max-w-2xl text-base md:text-lg lg:text-xl text-slate-300 mb-6 leading-relaxed bg-white/5 p-4 md:p-6 rounded-lg backdrop-blur-md border border-white/10 shadow-2xl">
             We architect GDPR-compliant 'Process & Purge' AI data pipelines. Your corporate intelligence is processed ephemerally with zero data retention.
           </p>
         </section>
@@ -263,7 +255,7 @@ export default function DeepNodeManifesto() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4" onClick={() => setActiveCard(null)}>
           <div 
             className="w-full max-w-6xl h-[85vh] rounded-xl shadow-[0_0_100px_rgba(217,119,6,0.2)] flex flex-col relative overflow-hidden bg-cover bg-center border border-amber-900/30"
-            style={{ backgroundImage: "url('/eski-el-yazmasi.jpg')" }} 
+            style={{ backgroundImage: "url('/vault.jpg')" }} 
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute inset-0 bg-[#e3d5b8]/90 backdrop-blur-sm"></div>
